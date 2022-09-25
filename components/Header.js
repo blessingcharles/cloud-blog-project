@@ -26,7 +26,9 @@ const Header = () => {
                 </div>
 
                 <div className={styles.bannerNav}>
-                    <div className=''>Our Blog</div>
+                    <Link href={`/`} >
+                        <div className=''>Our Blog</div>
+                    </Link>
                     <Link href={`/login`}>
                         <div>Log in</div>
                     </Link>
