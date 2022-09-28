@@ -15,6 +15,10 @@ const placeSchema = new mongoose.Schema({
         ref:'Users'
         
     },
+    ttr:{
+        type: String ,
+        required: true
+    },
     image:{
         type:String,
         required:true
