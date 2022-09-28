@@ -4,7 +4,7 @@ const {
     articleCreate,
     articleGetSingle,
     articleGetHottest,
-} = require("../controllers/articles-controllers");
+} = require("../controllers/articles-controller");
 const imageUploader = require("../middlewares/image-uploader");
 
 const articlerouter = express.Router();

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 
-const placeRouter = require("./routes/places-routes");
+const articleRouter = require("./routes/articles-routes");
 const userRouter = require("./routes/users-routes");
 
 const app = express();
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
     next();
 });
 //REST API
-app.use("/api/articles", placeRouter);
+app.use("/api/articles", articleRouter);
 app.use("/api/users", userRouter);
 // app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
