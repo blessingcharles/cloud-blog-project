@@ -8,6 +8,7 @@ const CreateArticle = () => {
     const [articleDetails , setArticleDetails] = useState({
         title : "" ,
         time : "" ,
+        description: "" ,
         content: ""
     }) ;
 
@@ -26,7 +27,7 @@ const CreateArticle = () => {
                     <form action="">
                         <div class="mt-4">
                             <div>
-                                <label class="block" for="Username">
+                                <label class="block" for="title">
                                     Article Title
                                 </label>
                                 <input
@@ -40,8 +41,25 @@ const CreateArticle = () => {
                                     Title field is required{" "}
                                 </span>
                             </div>
+
                             <div>
-                                <label class="block" for="email">
+                                <label class="block" for="description">
+                                    Description
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Description"
+                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                    value={articleDetails.description}
+                                    onChange={(e) => setArticleDetails({ ...articleDetails , description : e.target.value })}
+                                />
+                                <span class="text-xs tracking-wide text-red-600">
+                                    Description field is required{" "}
+                                </span>
+                            </div>
+
+                            <div>
+                                <label class="block" for="Time to Read">
                                     Time to Read
                                 </label>
                                 <input
