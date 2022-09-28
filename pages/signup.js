@@ -9,13 +9,21 @@ const SignUp = () => {
         username : "" ,
         email : "" ,
         password : "" ,
-        currentPassword : ""  
+        currentPassword : ""  ,
+        profilePic: null
     }) ;
 
 
     const signupFormHandler = (e)=>{
         e.preventDefault() ;
-        console.log(signupDetails)
+        let formData = new FormData() ;
+        
+        formData.append("username" , signupDetails.username) ;
+        formData.append("email" , signupDetails.email) ;
+        formData.append("password" , signupDetails.password) ;
+        formData.append("profilePic" , signupDetails.profilePic) ;
+
+        
     }
 
     return (
@@ -74,6 +82,16 @@ const SignUp = () => {
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                                     value={signupDetails.currentPassword}
                                     onChange={(e) => setSignupDetails({ ...signupDetails , currentPassword : e.target.value })}                              
+                                />
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="block">Profile Pic</label>
+                                <input
+                                    type="file"
+                                    placeholder="profile"
+                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                    onChange={(e) => setSignupDetails({ ...signupDetails , profilePic : e.target.files[0] })}                              
                                 />
                             </div>
 
