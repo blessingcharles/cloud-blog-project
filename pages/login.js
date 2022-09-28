@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BASE_URL } from "../config";
 import Header from "../components/Header";
 
 const styles = {};
@@ -10,9 +11,28 @@ const Login = () => {
         password : ""  
     }) ;
 
-    const loginFormHandler = (e) => {
+    const loginFormHandler = async (e) => {
         e.preventDefault();
-        console.log(loginDetails);
+        let formData = new FormData();
+
+        formData.append("email", loginDetails.email);
+        formData.append("password", loginDetails.password);
+
+        try {
+            const response = await fetch(`${BASE_URL}/users/login`, {
+                method: "POST",
+                body: formData,
+            });
+
+            if(!response.ok){
+                console.log("Failed")
+            }
+            else{
+                alert("Successfully Login")
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (

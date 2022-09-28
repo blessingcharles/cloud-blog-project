@@ -1,4 +1,7 @@
 import { useState } from "react";
+
+
+import { BASE_URL } from "../config";
 import Header from "../../components/Header";
 
 const styles = {};
@@ -9,13 +12,36 @@ const CreateArticle = () => {
         title : "" ,
         time : "" ,
         description: "" ,
-        content: ""
+        content: "" ,
+        coverPic: null
     }) ;
 
 
-    const articleFormHandler = (e)=>{
-        e.preventDefault() ;
-        console.log(articleDetails)
+    const articleFormHandler = async (e)=>{
+        e.preventDefault();
+        let formData = new FormData();
+
+        formData.append("title", articleDetails.title);
+        formData.append("ttr", articleDetails.time);
+        formData.append("description", articleDetails.description);
+        formData.append("content", articleDetails.content);
+        formData.append("coverPic", articleDetails.coverPic);
+
+        try {
+            const response = await fetch(`${BASE_URL}/articles/create`, {
+                method: "POST",
+                body: formData,
+            });
+
+            if(!response.ok){
+                console.log("Failed")
+            }
+            else{
+                alert("Successfully registered")
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
@@ -81,6 +107,20 @@ const CreateArticle = () => {
                                     class="w-full flex-1 h-72 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                                     value={articleDetails.content}
                                     onChange={(e) => setArticleDetails({ ...articleDetails , content : e.target.value })}
+                                />
+                            </div>
+                            <div class="mt-4">
+                                <label class="block">Cover Picture</label>
+                                <input
+                                    type="file"
+                                    placeholder="profile"
+                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                    onChange={(e) =>
+                                        setArticleDetails({
+                                            ...ArticleDetails,
+                                            coverPic: e.target.files[0],
+                                        })
+                                    }
                                 />
                             </div>
                             <div class="flex items-baseline justify-center">

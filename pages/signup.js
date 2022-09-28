@@ -1,30 +1,44 @@
 import { useState } from "react";
 import Header from "../components/Header";
 
+import { BASE_URL } from "../config";
+
 const styles = {};
 
 const SignUp = () => {
+    const [signupDetails, setSignupDetails] = useState({
+        username: "",
+        email: "",
+        password: "",
+        currentPassword: "",
+        profilePic: null,
+    });
 
-    const [signupDetails , setSignupDetails] = useState({
-        username : "" ,
-        email : "" ,
-        password : "" ,
-        currentPassword : ""  ,
-        profilePic: null
-    }) ;
+    const signupFormHandler = async (e) => {
+        e.preventDefault();
+        let formData = new FormData();
 
+        formData.append("username", signupDetails.username);
+        formData.append("email", signupDetails.email);
+        formData.append("password", signupDetails.password);
+        formData.append("profilePic", signupDetails.profilePic);
 
-    const signupFormHandler = (e)=>{
-        e.preventDefault() ;
-        let formData = new FormData() ;
-        
-        formData.append("username" , signupDetails.username) ;
-        formData.append("email" , signupDetails.email) ;
-        formData.append("password" , signupDetails.password) ;
-        formData.append("profilePic" , signupDetails.profilePic) ;
+        try {
+            const response = await fetch(`${BASE_URL}/users/signup`, {
+                method: "POST",
+                body: formData,
+            });
 
-        
-    }
+            if(!response.ok){
+                console.log("Failed")
+            }
+            else{
+                alert("Successfully registered")
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     return (
         <div>
@@ -43,7 +57,12 @@ const SignUp = () => {
                                     placeholder="Username"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                                     value={signupDetails.username}
-                                    onChange={(e) => setSignupDetails({ ...signupDetails , username : e.target.value })}
+                                    onChange={(e) =>
+                                        setSignupDetails({
+                                            ...signupDetails,
+                                            username: e.target.value,
+                                        })
+                                    }
                                 />
                                 <span class="text-xs tracking-wide text-red-600">
                                     Username field is required{" "}
@@ -58,7 +77,12 @@ const SignUp = () => {
                                     placeholder="Email"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                                     value={signupDetails.email}
-                                    onChange={(e) => setSignupDetails({ ...signupDetails , email : e.target.value })}
+                                    onChange={(e) =>
+                                        setSignupDetails({
+                                            ...signupDetails,
+                                            email: e.target.value,
+                                        })
+                                    }
                                 />
                                 <span class="text-xs tracking-wide text-red-600">
                                     Email field is required{" "}
@@ -71,7 +95,12 @@ const SignUp = () => {
                                     placeholder="Password"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                                     value={signupDetails.password}
-                                    onChange={(e) => setSignupDetails({ ...signupDetails , password : e.target.value })}
+                                    onChange={(e) =>
+                                        setSignupDetails({
+                                            ...signupDetails,
+                                            password: e.target.value,
+                                        })
+                                    }
                                 />
                             </div>
                             <div class="mt-4">
@@ -81,7 +110,12 @@ const SignUp = () => {
                                     placeholder="Confirm Password"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                                     value={signupDetails.currentPassword}
-                                    onChange={(e) => setSignupDetails({ ...signupDetails , currentPassword : e.target.value })}                              
+                                    onChange={(e) =>
+                                        setSignupDetails({
+                                            ...signupDetails,
+                                            currentPassword: e.target.value,
+                                        })
+                                    }
                                 />
                             </div>
 
@@ -91,14 +125,20 @@ const SignUp = () => {
                                     type="file"
                                     placeholder="profile"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                    onChange={(e) => setSignupDetails({ ...signupDetails , profilePic : e.target.files[0] })}                              
+                                    onChange={(e) =>
+                                        setSignupDetails({
+                                            ...signupDetails,
+                                            profilePic: e.target.files[0],
+                                        })
+                                    }
                                 />
                             </div>
 
                             <div class="flex items-baseline justify-between">
-                                <button 
+                                <button
                                     class="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
-                                    onClick={(e) => signupFormHandler(e)}>
+                                    onClick={(e) => signupFormHandler(e)}
+                                >
                                     Signup
                                 </button>
                                 <a
