@@ -3,7 +3,7 @@ const { default: next } = require("next");
 const Article = require("../models/article-schema");
 
 const articleCreate = async (req, res) => {
-
+    
     const { title, content, description, ttr } = req.body;
     //validating user input
     const error = validationResult(req);

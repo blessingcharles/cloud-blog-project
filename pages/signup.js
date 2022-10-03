@@ -1,3 +1,4 @@
+import Router from "next/router"
 import { useState } from "react";
 import Header from "../components/Header";
 
@@ -21,10 +22,10 @@ const SignUp = () => {
         formData.append("username", signupDetails.username);
         formData.append("email", signupDetails.email);
         formData.append("password", signupDetails.password);
-        formData.append("profilePic", signupDetails.profilePic);
+        formData.append("image", signupDetails.profilePic);
 
         try {
-            const response = await fetch(`${BASE_URL}/users/signup`, {
+            const response = await fetch(`${BASE_URL}/api/users/signup`, {
                 method: "POST",
                 body: formData,
             });
@@ -34,6 +35,7 @@ const SignUp = () => {
             }
             else{
                 alert("Successfully registered")
+                Router.push('/login')
             }
         } catch (err) {
             console.log(err);

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Router from "next/router"
 import { BASE_URL } from "../conf";
 import Header from "../components/Header";
 
@@ -17,18 +18,21 @@ const Login = () => {
 
         formData.append("email", loginDetails.email);
         formData.append("password", loginDetails.password);
-
         try {
-            const response = await fetch(`${BASE_URL}/users/login`, {
+            const response = await fetch(`${BASE_URL}/api/users/login`, {
                 method: "POST",
                 body: formData,
             });
-
             if(!response.ok){
-                console.log("Failed")
+                alert("Failed")
+                return ;
             }
             else{
                 alert("Successfully Login")
+                let data = await response.json() ;
+                localStorage.setItem("jwt-token" , data.token);
+                
+                Router.push("/")
             }
         } catch (err) {
             console.log(err);

@@ -27,10 +27,14 @@ const CreateArticle = () => {
         formData.append("content", articleDetails.content);
         formData.append("image", articleDetails.coverPic);
 
+        let auth_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRob21hc0BnbWFpbC5jb20iLCJ1c2VySWQiOiI2MzM4NWIzMmRjYzVhOWZhMzI2YmQxYWYiLCJpYXQiOjE2NjQ4MDQ5MzMsImV4cCI6MTY2NDgwODUzM30.c4ajP0KJPq_38BNPDacAqSr3gB8MuY7LkvIFBPssPA4"
         try {
             const response = await fetch(`${BASE_URL}/api/articles/create`, {
                 method: "POST",
                 body: formData,
+                headers:{
+                    'Authorization':'Bearer '+ auth_token
+                }
             });
 
             if(!response.ok){
