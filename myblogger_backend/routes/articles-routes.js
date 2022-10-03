@@ -1,17 +1,24 @@
 const express = require("express");
 const { check } = require("express-validator");
+
 const {
     articleCreate,
     articleGetSingle,
     articleGetHottest,
 } = require("../controllers/articles-controller");
 const imageUploader = require("../middlewares/image-uploader");
+const verifyJwt = require("../middlewares/verify-jwt");
 
 const articlerouter = express.Router();
 
+
+articlerouter.get("/search", articleGetSingle);
+articlerouter.get("/hottest", articleGetHottest);
+
+articlerouter.use(verifyJwt)
 articlerouter.post(
     "/create",
-    imageUploader.single("image"),
+    // imageUploader.single("image"),
     [
         check("title").not().isEmpty(),
         check("description").isLength({ min: 5 }),
@@ -20,8 +27,5 @@ articlerouter.post(
       ],
     articleCreate
 );
-
-articlerouter.get("/:id", articleGetSingle);
-articlerouter.get("/hottest", articleGetHottest);
 
 module.exports = articlerouter;
