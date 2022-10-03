@@ -22,8 +22,18 @@ const placeSchema = new mongoose.Schema({
     image:{
         type:String,
         required:true
+    } ,
+    createdAt:{
+        type: Date ,
+        default: moment().toDate() 
     }
 })
 
 
+placeSchema.pre("save" , (next)=>{
+    if(this.new){
+        this.createdAt = moment().toDate() ;
+    }
+    next() ;
+})
 module.exports = mongoose.model('Place',placeSchema);

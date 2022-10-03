@@ -39,11 +39,12 @@ const userSignUp = async (req, res, next) => {
         return next(error);
     }
     // creating user
+    // req.file.path = "dummy"
     const newUser = new User({
         username,
         email,
         password: hashedPassword,
-        image: "http://localhost:5000/" + req.file.path,
+        image: "http://localhost:5000/image.png" 
     });
     console.log(newUser);
     //saving to db

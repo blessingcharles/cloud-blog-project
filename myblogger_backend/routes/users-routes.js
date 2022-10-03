@@ -6,7 +6,7 @@ const imageUploader = require("../middlewares/image-uploader");
 const userrouter = express.Router();
 userrouter.post(
     "/signup",
-    imageUploader.single("image"),
+    // imageUploader.single("image"),
     [
         check("username").not().isEmpty(),
         check("password").isLength({ min: 5 }),

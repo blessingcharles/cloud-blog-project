@@ -45,18 +45,15 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || "something went wrong" });
 });
 
-app.listen(5000, () => {
-    console.log("Server Started");
-});
 
-// mongoose
-// .connect('mongodb+srv://username:password@cluster0.xb2oh.mongodb.net/mernapp?retryWrites=true&w=majority',{ useNewUrlParser: true } )
-// .then(()=>{
-//     app.listen(5000);
-//     console.log('mongodb connected')}
-// )
-// .catch(
-//     (err)=>{
-//         console.log(err)
-//     }
-// )
+mongoose
+.connect(`mongodb+srv://hello123:test123@cluster0.ngskc.mongodb.net/?retryWrites=true&w=majority`,{ useNewUrlParser: true } )
+.then(()=>{
+    app.listen(3000);
+    console.log('mongodb connected')}
+)
+.catch(
+    (err)=>{
+        console.log(err)
+    }
+)
