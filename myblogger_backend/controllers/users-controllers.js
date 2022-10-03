@@ -44,7 +44,7 @@ const userSignUp = async (req, res, next) => {
         username,
         email,
         password: hashedPassword,
-        image: "http://localhost:5000/image.png" 
+        image: "http://localhost:5000/image.png",
     });
     console.log(newUser);
     //saving to db
@@ -66,7 +66,9 @@ const userSignUp = async (req, res, next) => {
         return next(error);
     }
 
-    res.status(201).json({ email: email, userId: newUser.id, token: token });
+    return res
+        .status(201)
+        .json({ email: email, userId: newUser.id, token: token });
 };
 
 const userLogIn = async (req, res, next) => {

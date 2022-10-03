@@ -15,6 +15,7 @@ articlerouter.post(
     [
         check("title").not().isEmpty(),
         check("description").isLength({ min: 5 }),
+        check("ttr").not().isEmpty() ,
         check("content").not().isEmpty(),
       ],
     articleCreate

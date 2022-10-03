@@ -1,8 +1,8 @@
 const [validationResult] = require("express-validator");
+const { default: next } = require("next");
 const Article = require("../models/article-schema");
 
-
-const articleCreate = (req, res) => {
+const articleCreate = async (req, res) => {
     const { title, content, description, ttr } = req.body;
     //validating user input
     const error = validationResult(req);
@@ -12,18 +12,46 @@ const articleCreate = (req, res) => {
     }
 
     let newArtice = new Article({
-        title ,
-        content ,
-        description ,
-        image: "http://localhost:3000/image.png"
-    })
+        title,
+        content,
+        description,
+        ttr,
+        image: "https://melmagazine.com/wp-content/uploads/2021/01/66f-1.jpg",
+    });
+
+    try {
+        await newArtice.save();
+    } catch (err) {
+        const error = new Error("Something went wrong", 400);
+        return next(error);
+    }
+
+    return res.status(201).json({ message: "successfully created" });
 };
 
-const articleGetSingle = (req, res) => {
-    const id = req.params.id;
+const articleGetSingle = async (req, res) => {
+    const title = req.params.title;
+    if(!title){
+        return res.status(400).json({message : "title required"})
+    }
+
+    let article ;
+    try{
+        article = await Article.find({title})
+        if(!article){
+            const error = new Error("Article not found" , 400)
+            return next(error)
+        }
+    }
+    catch (err) {
+        const error = new Error("Something went wrong", 400);
+        return next(error);
+    }
+
+    return res.status(200).json(article)
 };
 
-const articleGetHottest = (req, res) => {};
+const articleGetHottest = async (req, res) => {};
 
 module.exports = {
     articleCreate,
