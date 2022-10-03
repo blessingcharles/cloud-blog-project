@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../conf";
 import Header from "../../components/Header";
 
 const styles = {};

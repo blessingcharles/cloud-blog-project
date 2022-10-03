@@ -50,9 +50,10 @@ const articleGetSingle = async (req, res) => {
 
 const articleGetHottest = async (req, res) => {
     let articles = []
+    let count = req.query.count || 5 ;
 
     try{
-        articles = await Article.find().sort({createdAt : -1}).limit(5) ;
+        articles = await Article.find().sort({createdAt : -1}).limit(count) ;
     }
     catch(err){
         return res.status(400).json({ message: "something went wrong" });

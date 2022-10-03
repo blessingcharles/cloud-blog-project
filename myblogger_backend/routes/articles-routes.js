@@ -18,7 +18,7 @@ articlerouter.get("/hottest", articleGetHottest);
 articlerouter.use(verifyJwt)
 articlerouter.post(
     "/create",
-    // imageUploader.single("image"),
+    imageUploader.single("image"),
     [
         check("title").not().isEmpty(),
         check("description").isLength({ min: 5 }),
