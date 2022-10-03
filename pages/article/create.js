@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-import { BASE_URL } from "../conf";
+import { BASE_URL } from "../../conf";
 import Header from "../../components/Header";
 
 const styles = {};
@@ -25,10 +25,10 @@ const CreateArticle = () => {
         formData.append("ttr", articleDetails.time);
         formData.append("description", articleDetails.description);
         formData.append("content", articleDetails.content);
-        formData.append("coverPic", articleDetails.coverPic);
+        formData.append("image", articleDetails.coverPic);
 
         try {
-            const response = await fetch(`${BASE_URL}/articles/create`, {
+            const response = await fetch(`${BASE_URL}/api/articles/create`, {
                 method: "POST",
                 body: formData,
             });
@@ -37,7 +37,7 @@ const CreateArticle = () => {
                 console.log("Failed")
             }
             else{
-                alert("Successfully registered")
+                alert("Successfully created")
             }
         } catch (err) {
             console.log(err);
@@ -117,7 +117,7 @@ const CreateArticle = () => {
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                                     onChange={(e) =>
                                         setArticleDetails({
-                                            ...ArticleDetails,
+                                            ...articleDetails,
                                             coverPic: e.target.files[0],
                                         })
                                     }

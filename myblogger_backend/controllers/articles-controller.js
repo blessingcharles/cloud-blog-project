@@ -3,6 +3,7 @@ const { default: next } = require("next");
 const Article = require("../models/article-schema");
 
 const articleCreate = async (req, res) => {
+
     const { title, content, description, ttr } = req.body;
     //validating user input
     const error = validationResult(req);
@@ -17,7 +18,7 @@ const articleCreate = async (req, res) => {
         description,
         ttr,
         creator: req.userData.userId ,
-        image: "https://melmagazine.com/wp-content/uploads/2021/01/66f-1.jpg",
+        image: req.file.path ,
     });
 
     try {

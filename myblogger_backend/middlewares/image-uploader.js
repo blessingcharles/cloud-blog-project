@@ -15,7 +15,6 @@ const imageUploader = multer({
         filename: (req, file, cb) => {
             const Name = randomName();
             const extension = MIME_TYPES[file.mimetype];
-            console.log(extension);
             cb(null, Name + "." + extension);
         },
         destination: (req, file, cb) => {
@@ -25,7 +24,6 @@ const imageUploader = multer({
     fileFilter: (req, file, cb) => {
         const isValid = !!MIME_TYPES[file.mimetype];
         const error = isValid ? null : new Error("invalid mime type");
-        console.log(error);
         cb(error, isValid);
     },
 });

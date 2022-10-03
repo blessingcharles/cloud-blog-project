@@ -10,6 +10,8 @@ const userRouter = require("./routes/users-routes");
 const app = express();
 
 app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: false}));
+
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
