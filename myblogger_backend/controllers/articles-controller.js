@@ -1,9 +1,11 @@
 const { validationResult } = require("express-validator");
 const { default: next } = require("next");
 const Article = require("../models/article-schema");
+const s3 = require("../awsBuckets");
+const fs = require("fs");
 
 const articleCreate = async (req, res) => {
-    console.log(req.body   )
+    console.log(req.body);
     const { title, content, description, ttr } = req.body;
     //validating user input
     const error = validationResult(req);
@@ -12,13 +14,25 @@ const articleCreate = async (req, res) => {
         return next(error);
     }
 
+    const blob = fs.readFileSync(req.file.path);
+
+    const uploadedImage = await s3
+        .upload({
+            Bucket: "thomastheblogger" ,
+            Key: req.file.filename ,
+            Body: blob,
+        })
+        .promise();
+
+    console.log(uploadedImage.Location)
+
     let newArtice = new Article({
         title,
         content,
         description,
         ttr,
-        creator: req.userData.userId ,
-        image: "http://localhost:5000/" + req.file.path ,
+        creator: req.userData.userId,
+        image: uploadedImage.Location ,
     });
 
     try {
@@ -29,14 +43,14 @@ const articleCreate = async (req, res) => {
     return res.status(201).json({ message: "successfully created" });
 };
 
-const articleGetAllId = async (req , res)=>{
-    const results = await Article.find().select('id');
+const articleGetAllId = async (req, res) => {
+    const results = await Article.find().select("id");
 
-    return res.status(200).json(results)
-}
+    return res.status(200).json(results);
+};
 const articleGetSingle = async (req, res) => {
     const id = req.query.id;
-    const temp = await Article.findById(id)
+    const temp = await Article.findById(id);
     if (!id) {
         return res.status(400).json({ message: "title required" });
     }
@@ -44,30 +58,30 @@ const articleGetSingle = async (req, res) => {
     try {
         article = await Article.aggregate([
             {
-                $match:{
-                    title: temp.title
-                }
+                $match: {
+                    title: temp.title,
+                },
             },
             {
-                $lookup:{
-                    from: 'users' ,
-                    localField: 'creator' ,
-                    foreignField: '_id' ,
-                    as: 'author'
-                }
+                $lookup: {
+                    from: "users",
+                    localField: "creator",
+                    foreignField: "_id",
+                    as: "author",
+                },
             },
             {
-                $project:{
-                    author:{
-                        password: 0
-                    }
-                }
-            }, 
+                $project: {
+                    author: {
+                        password: 0,
+                    },
+                },
+            },
             {
-                $unwind:'$author'
-            }
+                $unwind: "$author",
+            },
         ]);
-        
+
         if (!article || article.length == 0) {
             const error = new Error("Article not found", 400);
             return next(error);
@@ -80,41 +94,41 @@ const articleGetSingle = async (req, res) => {
 };
 
 const articleGetHottest = async (req, res) => {
-    let articles = []
-    let count = req.query.count || 5 ;
+    let articles = [];
+    let count = req.query.count || 5;
 
-    try{
+    try {
         articles = await Article.aggregate([
             {
-                $lookup:{
-                    from: 'users' ,
-                    localField: 'creator' ,
-                    foreignField: '_id' ,
-                    as: 'author'
-                }
+                $lookup: {
+                    from: "users",
+                    localField: "creator",
+                    foreignField: "_id",
+                    as: "author",
+                },
             },
             {
-                $project:{
-                    author:{
-                        password: 0
-                    }
-                }
-            }, 
+                $project: {
+                    author: {
+                        password: 0,
+                    },
+                },
+            },
             {
-                $unwind:'$author'
-            }
-        ]).sort({createdAt: -1}).limit(5) ;
-
-    }
-    catch(err){
+                $unwind: "$author",
+            },
+        ])
+            .sort({ createdAt: -1 })
+            .limit(5);
+    } catch (err) {
         return res.status(400).json({ message: "something went wrong" });
     }
-    return res.status(200).json(articles)
+    return res.status(200).json(articles);
 };
 
 module.exports = {
     articleCreate,
     articleGetSingle,
     articleGetHottest,
-    articleGetAllId
+    articleGetAllId,
 };

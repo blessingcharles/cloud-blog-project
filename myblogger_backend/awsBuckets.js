@@ -1,4 +1,4 @@
-import * as AWS from 'aws-sdk';
+const AWS = require("aws-sdk")
 const {AWS_ACCESS_KEY , AWS_SECRET_KEY} = require("./conf");
 
 AWS.config.update({
@@ -10,6 +10,4 @@ AWS.config.update({
 
 let s3 = new AWS.S3({signatureVersion: 'v4'});
 
-module.exports = {
-    s3
-}
+module.exports = s3

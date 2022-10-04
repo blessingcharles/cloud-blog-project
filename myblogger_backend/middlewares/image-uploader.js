@@ -14,6 +14,7 @@ const imageUploader = multer({
     storage: multer.diskStorage({
         filename: (req, file, cb) => {
             const Name = randomName();
+            console.log(Name)
             const extension = MIME_TYPES[file.mimetype];
             cb(null, Name + "." + extension);
         },
