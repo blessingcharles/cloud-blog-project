@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const moment = require("moment")
 
-const placeSchema = new mongoose.Schema({
+const articleSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true
@@ -15,6 +15,10 @@ const placeSchema = new mongoose.Schema({
         required:true,
         ref:'Users'
         
+    },
+    content:{
+        type: String ,
+        required: true
     },
     ttr:{
         type: String ,
@@ -31,10 +35,10 @@ const placeSchema = new mongoose.Schema({
 })
 
 
-placeSchema.pre("save" , (next)=>{
+articleSchema.pre("save" , (next)=>{
     if(this.new){
         this.createdAt = moment().toDate() ;
     }
     next() ;
 })
-module.exports = mongoose.model('Place',placeSchema);
+module.exports = mongoose.model('article',articleSchema);

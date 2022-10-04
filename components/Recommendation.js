@@ -1,9 +1,12 @@
 import Image from "next/image";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { BASE_URL } from "../conf";
 import { MdMarkEmailRead } from "react-icons/md";
 
 import AuthorImage from "../public/author-profile.jpg";
 import AWSCloud from "../public/aws-cloud.png";
+import RecArticle from "./RecArticle";
 const styles = {
     wrapper: `h-screen min-w-[15rem] flex-[1.2] max-w-[30rem] p-[1rem]`,
 
@@ -24,6 +27,20 @@ const styles = {
 };
 
 const Recommedation = () => {
+    const [articles, setArticles] = useState([]);
+    const [username , setUsername] = useState("");
+    const [userImage , setUserImage] = useState("")
+    useEffect(() => {
+        const fetcher = async () => {
+            let response = await fetch(`${BASE_URL}/api/articles/hottest`);
+            let data = await response.json();
+            setArticles(data);
+        };
+        fetcher();
+        setUsername(localStorage.getItem("username"))
+        setUserImage(localStorage.getItem("image"));
+    }, []);
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.searchBar}>
@@ -37,12 +54,12 @@ const Recommedation = () => {
 
             <div className={styles.authorContainer}>
                 <div className={styles.authorProfileImage}>
-                    <Image src={AuthorImage} height={40} width={40} />
+                    <Image src={userImage} height={40} width={40} />
                 </div>
 
                 <div>
                     {/* TODO : add followers */}
-                    <div className={styles.authorName}>thomasthecat</div>
+                    <div className={styles.authorName}>{username}</div>
                 </div>
             </div>
 
@@ -52,60 +69,19 @@ const Recommedation = () => {
                 </div>
 
                 {/* Each Recommended Article */}
-                <div className={styles.articlesContainer}>
-                    <div>
-                        <div className={styles.recommendationAuthorContainer}>
-                            <div
-                                className={
-                                    styles.recommendationAuthorImageContainer
-                                }
-                            >
-                                <Image
-                                    src={AuthorImage}
-                                    height={100}
-                                    width={100}
-                                />
-                            </div>
-                            <div className={styles.recommendationAuthorName}>
-                                th3h04x
-                            </div>
-                        </div>
-                        <div className={styles.recommendationArticleTitle}>
-                            Which Cloud Providers to choose for your next
-                            project ?
-                        </div>
-                    </div>
 
-                    <Image src={AWSCloud} height={100} width={100} />
-                </div>
+                {
+                    articles.map((article)=>{
+                        return <RecArticle 
+                            key={article.id}
+                            title={article.title}
+                            authorName={article.author.username}
+                            articleImage={article.image}
+                            authorImage={article.author.image}
 
-                <div className={styles.articlesContainer}>
-                    <div>
-                        <div className={styles.recommendationAuthorContainer}>
-                            <div
-                                className={
-                                    styles.recommendationAuthorImageContainer
-                                }
-                            >
-                                <Image
-                                    src={AuthorImage}
-                                    height={100}
-                                    width={100}
-                                />
-                            </div>
-                            <div className={styles.recommendationAuthorName}>
-                                th3h04x
-                            </div>
-                        </div>
-                        <div className={styles.recommendationArticleTitle}>
-                            Which Cloud Providers to choose for your next
-                            project ?
-                        </div>
-                    </div>
-
-                    <Image src={AWSCloud} height={100} width={100} />
-                </div>
-
+                        />
+                    })
+                }
             </div>
         </div>
     );

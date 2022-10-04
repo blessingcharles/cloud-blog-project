@@ -11,7 +11,7 @@ const Banner = () => {
             <div className={styles.content}>
                 <div>
                     <h1 className="max-w-xl text-[4rem] font-mediumSerif">
-                        Never Get Staisfied.
+                        Never Get Satisfied.
                     </h1>
                     <h3 className="text-2xl">
                         Experience is the best teacher in all situation

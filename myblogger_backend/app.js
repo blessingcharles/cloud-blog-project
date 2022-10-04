@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 //REST API
 app.use("/api/articles", articleRouter);
 app.use("/api/users", userRouter);
-// app.use("/uploads/images", express.static(path.join("uploads", "images")));
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 //error handling
 app.use((req, res, next) => {

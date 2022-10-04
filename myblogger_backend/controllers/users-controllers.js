@@ -44,7 +44,7 @@ const userSignUp = async (req, res, next) => {
         username,
         email,
         password: hashedPassword,
-        image: "http://localhost:5000/image.png",
+        image: "http://localhost:5000/" + req.file.path,
     });
     console.log(newUser);
     //saving to db
@@ -68,7 +68,13 @@ const userSignUp = async (req, res, next) => {
 
     return res
         .status(201)
-        .json({ email: email, userId: newUser.id, token: token });
+        .json({
+            email: email,
+            userId: newUser.id,
+            token: token,
+            username: newUser.username,
+            image: newUser.image,
+        });
 };
 
 const userLogIn = async (req, res, next) => {
@@ -118,6 +124,8 @@ const userLogIn = async (req, res, next) => {
         email: email,
         userId: identifyUser.id,
         token: token,
+        username: identifyUser.username,
+        image: identifyUser.image,
     });
 };
 

@@ -31,6 +31,8 @@ const Login = () => {
                 alert("Successfully Login")
                 let data = await response.json() ;
                 localStorage.setItem("jwt-token" , data.token);
+                localStorage.setItem("username" , data.username);
+                localStorage.setItem("image" , data.image);
                 
                 Router.push("/")
             }

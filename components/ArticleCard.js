@@ -20,39 +20,38 @@ const styles = {
     bookmarkContainer: "cursor-pointer",
 };
 
-const ArticleCard = () => {
+const ArticleCard = ({uid , title , description , ttr , authorName , authorImage , articleImage}) => {
     return (
-        <Link href={`/article/123`}>
+        <Link href={`/article/${uid}`}>
             <div className={styles.articleWrapper}>
                 <div className={styles.articleDetails}>
                     <div className={styles.authorContainer}>
                         <div className={styles.authorImageContainer}>
                             <Image
-                                src="https://melmagazine.com/wp-content/uploads/2021/01/66f-1.jpg"
+                                src={authorImage}
                                 className={styles.authorImage}
                                 width={40}
                                 height={40}
                             />
                         </div>
 
-                        <div className={styles.authorName}>thomasthecat</div>
+                        <div className={styles.authorName}>{authorName}</div>
                     </div>
 
                     <h1 className={styles.title}>
-                        Are you serious about the cloud security for you public
-                        servers ?
+                        {title}
                     </h1>
                     <div className={styles.oneliner}>
-                        How to secure your cloud infrastructures .
+                        {description}
                     </div>
 
                     <div className={styles.detailsContainer}>
-                        <span className="">Sept 22 2022 . 15 min read</span>
+                        <span className="">{ttr}</span>
                     </div>
                 </div>
                 <div className={styles.thumbnailContainer}>
                     <Image
-                        src="https://melmagazine.com/wp-content/uploads/2021/01/66f-1.jpg"
+                        src={articleImage}
                         className={styles.authorImage}
                         width={100}
                         height={100}

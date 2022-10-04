@@ -1,6 +1,8 @@
 import Banner from "../components/Banner";
 import Header from "../components/Header";
 import ArticleCard from "../components/ArticleCard";
+import { useEffect, useState } from "react";
+import { BASE_URL } from "../conf";
 
 const styles = {
     mainWrapper: "mx-auto" ,
@@ -11,6 +13,16 @@ const styles = {
 };
 
 const Home = () => {
+    const [articles , setArticles] = useState([]) ;
+
+    useEffect(()=>{
+        const fetcher = async ()=>{
+            let response = await fetch(`${BASE_URL}/api/articles/hottest`);
+            let data = await response.json() ;
+            setArticles(data)    
+        }
+        fetcher()
+    } , [])
     return (
         <div className={styles.mainWrapper}>
             <Header />
@@ -18,9 +30,18 @@ const Home = () => {
             <div className={styles.mainContainer}>
                 <div className={styles.container}>
                     <div className={styles.articleList}>
-                        <ArticleCard />
-                        <ArticleCard />
-                        <ArticleCard />
+                        {articles.map(article => {
+                            return <ArticleCard 
+                                articleImage={article.image}
+                                uid={article._id}
+                                title={article.title}
+                                description={article.description}
+                                authorImage={article.author.image}
+                                authorName={article.author.username}
+                                ttr={article.ttr}
+                                key={article._id}
+                            />
+                        })}
                     </div>
                 </div>
             </div>
