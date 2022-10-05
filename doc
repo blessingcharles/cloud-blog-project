@@ -1,0 +1,21 @@
+Git, the word, originated from a British English slang that means a stupid or unpleasant person. Well, this ain’t the kind of Git we’re going to talk about today…
+
+If you’re completely new to Git, this will help you get started with Git, understanding what Git is meant for and some fundamental concepts you need to understand about Git. I started with Git a few years ago, and in all honesty I had no idea what Git was for.
+
+I came across Git when I finally completed my NodeJS tutorial and decided to host an app on Heroku. I created a free account on Heroku and when I got to deploy, there were three options: Use Heroku cli, GitHub or Dropbox. Since I had come accross GitHub earlier, I chose it automatically. So I created an account and followed the instructions on how to upload a project into a repository. These instructions were merely followed without any knowledge to what I was doing, I just knew what I wanted to achieve and all I knew was “follow the instructions until you get to a point where it doesn’t work”.
+
+To cut the long story short, it worked. And with that success, I challenged myself to understand this tool that had just gotten me to upload my first ever project to go live. I was ecstatic. It took me a long time to go through the Git docs, but in this article, it will take you less than 20 minutes to understand the basics of Git. This is not a full, hand’s on course. I might write a series about Git as a friend requested me to, but in this particular article, I’ll just get you started on what Git is and why you need it.
+Git is a free and open source distributed version control system. Git’s purpose is to keep track of projects and files as they change over time with manipulations happening from different users. Git stores information about the project’s progress on a repository. A repository has commits to the project or a set of references to the commits called heads. All this information is stored in the same folder as the project in a sub-folder called .git and will mostly be hidden by default in most systems.
+
+So basically. Git keeps track of the changes a couple of people make on a single project and then merges the code where people have worked on different parts into one project. This way, when someone introduces a bug, you can track down the code that introduced the bug by going through the commits. Commits must be made to a project to tell git that you’re satisfied with the changes you’ve made and want to commit the changes into the main branch called master by default.
+
+You can then upload the code to GitHub or BitBucket where authorised users can either view, pull the code or push changes.
+
+Getting started.
+
+To get started with Git, you need to download it to your machine. Head over to https://git-scm.com/ and download the version most compatibe with your system.
+
+During the installation of Git, make sure you choose to run Git on the normal console window as well, this will enable you to run Git on your command prompt using the git command.
+
+Once installed, open Git bash and create a working folder where you’ll test out your project and keep track of changes. Once you “cd” into the working folder, create a file and add random code to it. In my example I’ll create a file called app.js and add the following lines of code.
+To keep track of you changes, you can make changes to your code like add an extra statement or function. Assume that equivalent to adding around 600 lines of code to add a particular feature on a project like storing some data in localStorage or IndexedDB and manipulating it to fulfil a particular purpose. To keep track of when or who added this feature, you have to add changes to an index then when satisfied with the new lines, you commit the changes from the index to the main branch. Think of the index like a platform that keeps track of how far you’ve gone before adding the incrementing lines of code collectively to the main project. To add files to an index after making changes use this command.
